@@ -2,8 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use App\Article;
-use Faker\Generator;
+use Faker\Generator as Faker;
 use App\User;
+use Illuminate\Support\Str;
 
 class ArticleTableSeeder extends Seeder
 {
@@ -20,12 +21,13 @@ class ArticleTableSeeder extends Seeder
 
           $newArticle = new Article;
           $newArticle->user_id = $user->id;
-          $newArticle->title = $faker->
-          $newArticle->subtitle = $faker->
-          $newArticle->content = $faker->
-          $newArticle->excerpt = $faker->
-          $newArticle->slug = $faker->
-          $newArticle->keywords = $faker->
+          $newArticle->title = $faker->sentence(6, true);
+          $newArticle->subtitle = $faker->sentence(12, true);
+          $newArticle->content = $faker->text;
+          $newArticle->excerpt = $faker->sentence(12, true);
+          $newArticle->slug = Str::of($newArticle->title)->slug('-');
+          $newArticle->keywords = $faker->sentence(4);
+          $newArticle->save();
         }
     }
 }

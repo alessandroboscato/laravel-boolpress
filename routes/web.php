@@ -19,11 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function () {
 Route::get('/', 'HomeController@index')->name('home');
 Route::resource('articles', 'ArticleController');
 
 });
 
-Route::get('articles', 'ArticleController@index')->name('articles.index');
-Route::get('articles/{slug}', 'ArticleController@show')->name('articles.show');
+Route::get('articles', 'ArticleController@index')->name('guests.articles.index');
+Route::get('articles/{slug}', 'ArticleController@show')->name('guests.articles.show');

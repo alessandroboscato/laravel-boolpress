@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Immuniate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -16,9 +16,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-      dd("ciao");
-      $articles = Article::where("")
-
+      $user_id = Auth::id();
+      $articles = Article::where('user_id', $user_id)->get();
+      return view('admin.articles.index', compact('articles'));
     }
 
     /**
@@ -48,9 +48,10 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show($slug)
     {
-        //
+        $article = Article::where("slug", $slug)->first();
+        return view('admin.articles.show', compact('article'));
     }
 
     /**

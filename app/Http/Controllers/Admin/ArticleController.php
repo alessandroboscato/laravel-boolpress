@@ -95,7 +95,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, $id)
     {
         $data = $request->all();
 
@@ -111,15 +111,15 @@ class ArticleController extends Controller
 
         // $article = Article::where("slug", $slug)->first();
 
-        $newArticle = new Article;
-        $newArticle->title = $data["title"];
-        $newArticle->subtitle = $data["subtitle"];
-        $newArticle->content = $data["content"];
-        $newArticle->excerpt = $data["excerpt"];
-        $newArticle->keywords = $data["keywords"];
-        $newArticle->user_id = Rule::unique('articles')->ignore("user_id");
-        $newArticle->slug = Str::of($newArticle->title)->slug('-');
-        $newArticle->update();
+        $article = Article::find($id);
+        $article->title = $data["title"];
+        $article->subtitle = $data["subtitle"];
+        $article->content = $data["content"];
+        $article->excerpt = $data["excerpt"];
+        $article->keywords = $data["keywords"];
+        // $article->user_id = Rule::unique('articles')->ignore("user_id");
+        $article->slug = Str::of($article->title)->slug('-');
+        $article->update();
 
          return redirect()->route("articles.index");
 

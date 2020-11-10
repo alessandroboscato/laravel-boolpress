@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-sm">
         <h1>Modifica l'articolo</h1>
-        <form action="{{route('articles.update', $article->slug)}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('articles.update', $article)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
           <div class="form-group">

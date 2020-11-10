@@ -81,9 +81,10 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit($slug)
     {
-        //
+        $article = Article::where('slug', $slug)->first();
+        return view('admin.articles.edit', compact('article'));
     }
 
     /**

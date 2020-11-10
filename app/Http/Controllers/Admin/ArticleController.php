@@ -131,8 +131,11 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy($slug)
     {
-        //
+        $article = Article::where('slug', $slug)->first();
+        $article->delete();
+        return redirect()->route("articles.index");
+
     }
 }

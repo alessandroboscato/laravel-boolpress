@@ -19,7 +19,12 @@
           <td>
             <a href="{{route('articles.show', $article->slug)}}">View</a>
             <a href="{{route('articles.edit', $article->slug)}}">Edit</a>
-            Delete</td>
+            <form class="" action="{{route('articles.destroy', $article->slug)}}" method="POST">
+              @csrf
+              @method("DELETE")
+
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
         </tr>
       @endforeach
     </tbody>

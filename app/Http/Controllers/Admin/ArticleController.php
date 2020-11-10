@@ -84,6 +84,7 @@ class ArticleController extends Controller
     public function edit($slug)
     {
         $article = Article::where('slug', $slug)->first();
+        // dd($article);
         return view('admin.articles.edit', compact('article'));
     }
 

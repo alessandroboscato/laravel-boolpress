@@ -6,6 +6,7 @@ use App\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -39,19 +40,28 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
 
-        $validatedData = $request->validate([
+        $request->validate([
           "title" => "required|max:255",
           "subtitle" => "required|max:255",
           "content" => "required|max:20000",
           "excerpt" => "required|max:2000",
           "keywords" => "required|max:200",
-          // "image"
+          "image" => "image"
         ]);
 
         $newArticle = new Article;
         $newArticle->user_id = Auth::id();
-        
+        $newArticle->title = $data["title"];
+        $newArticle->subtitle = $data["subtitle"];
+        $newArticle->content = $data["content"];
+        $newArticle->excerpt = $data["excerpt"];
+        $newArticle->keywords = $data["keywords"];
+        $newArticle->slug = Str::of($newArticle->title)->slug('-');
+        $newArticle->save();
+
+        return redirect()->route("articles.show", $newArticle->slug);
       }
     /**
      * Display the specified resource.

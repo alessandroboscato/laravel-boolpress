@@ -10,33 +10,30 @@
         @method('POST')
           <div class="form-group">
             <label for="title">Titolo</label>
-            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Inserisci il titolo" required>
-            @error('title')
-            <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+            <input name="title" type="text" class="form-control" id="title" placeholder="Inserisci il titolo" required>
           </div>
           <div class="form-group">
             <label for="subtitle">Sottotitolo</label>
-            <input type="text" class="form-control" id="subtitle" placeholder="Inserisci un sottotitolo" required>
+            <input name="subtitle" type="text" class="form-control" id="subtitle" placeholder="Inserisci un sottotitolo" required>
           </div>
           <div class="form-group">
             <label for="content">Contenuto</label>
-            <textarea class="form-control" id="content" rows="3"></textarea>
+            <textarea name="content" class="form-control" id="content" rows="3"></textarea>
           </div>
           <div class="form-group">
             <label for="excerpt">Estratto</label>
-            <input type="text" class="form-control" id="excerpt" placeholder="Inserisci l'estratto" required>
+            <input name="excerpt" type="text" class="form-control" id="excerpt" placeholder="Inserisci l'estratto" required>
           </div>
           <div class="form-group">
             <label for="keywords">Keywords</label>
-            <input type="text" class="form-control" id="keywords" placeholder="Inserisci le keywords (max 5)" required>
+            <input name="keywords" type="text" class="form-control" id="keywords" placeholder="Inserisci le keywords (max 5)" required>
             <div class="input-group mb-3">
           </div>
           <div class="input-group-prepend">
             <span class="input-group-text">Upload</span>
           </div>
           <div class="custom-file">
-            <input type="file" class="custom-file-input" id="image" accept="image/*" required>
+            <input name="image" type="file" class="custom-file-input" id="image" accept="image/*" required>
             <label class="custom-file-label" for="image">Scegli il file</label>
           </div>
         </div>

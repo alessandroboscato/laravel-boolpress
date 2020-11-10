@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ArticleController extends Controller
 {
@@ -84,7 +85,6 @@ class ArticleController extends Controller
     public function edit($slug)
     {
         $article = Article::where('slug', $slug)->first();
-        // dd($article);
         return view('admin.articles.edit', compact('article'));
     }
 
@@ -95,9 +95,34 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, $slug)
     {
-        //
+        $data = $request->all();
+
+        $request->validate([
+          // "user_id" => "required|exists:users,id",
+          "title" => "required|max:255",
+          "subtitle" => "required|max:255",
+          "content" => "required|max:20000",
+          "excerpt" => "required|max:2000",
+          "keywords" => "required|max:200",
+          "image" => "image"
+        ]);
+
+        // $article = Article::where("slug", $slug)->first();
+
+        $newArticle = new Article;
+        $newArticle->title = $data["title"];
+        $newArticle->subtitle = $data["subtitle"];
+        $newArticle->content = $data["content"];
+        $newArticle->excerpt = $data["excerpt"];
+        $newArticle->keywords = $data["keywords"];
+        $newArticle->user_id = Rule::unique('articles')->ignore("user_id");
+        $newArticle->slug = Str::of($newArticle->title)->slug('-');
+        $newArticle->update();
+
+         return redirect()->route("articles.index");
+
     }
 
     /**

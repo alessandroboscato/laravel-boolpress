@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
+use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -43,18 +44,16 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
+        // validazione dati form
         $request->validate([
           "title" => "required|max:255",
           "subtitle" => "required|max:255",
           "content" => "required|max:20000",
           "excerpt" => "required|max:2000",
-          // "keywords" => "required|max:200",
           "image" => "image"
         ]);
 
         $path = Storage::disk('public')->put('images', $data["image"]);
-
 
         $newArticle = new Article;
         $newArticle->user_id = Auth::id();
@@ -62,10 +61,13 @@ class ArticleController extends Controller
         $newArticle->subtitle = $data["subtitle"];
         $newArticle->content = $data["content"];
         $newArticle->excerpt = $data["excerpt"];
-        // $newArticle->keywords = $data["keywords"];
         $newArticle->slug = Str::of($newArticle->title)->slug('-');
         $newArticle->image = $path;
         $newArticle->save();
+
+        // validazione keyword
+        $newTag = new Tag;
+        $newArticle->keywords = $data["keywords"];
 
         return redirect()->route("articles.show", $newArticle->slug);
       }

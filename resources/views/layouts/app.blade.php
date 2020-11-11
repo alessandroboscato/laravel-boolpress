@@ -60,12 +60,20 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('articles.index') }}">
+                                        {{ __('Vai al sito') }}
+                                    </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>
                             </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('articles.create') }}">{{ __('New Article') }}</a>
+                                </li>
+                            @endif
                         @endguest
                     </ul>
                 </div>

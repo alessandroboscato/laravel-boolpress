@@ -26,7 +26,7 @@
           </div>
           <div class="form-group">
             <label for="keywords">Keywords</label>
-            <input name="keywords" type="text" class="form-control" id="keywords" placeholder="Inserisci le keywords (max 5)" required>
+            <input name="keywords" type="text" class="form-control" id="keywords" placeholder="Inserisci le keywords (max 5)">
             <div class="input-group mb-3">
           </div>
           <div class="input-group-prepend">

@@ -49,7 +49,7 @@ class ArticleController extends Controller
           "subtitle" => "required|max:255",
           "content" => "required|max:20000",
           "excerpt" => "required|max:2000",
-          "keywords" => "required|max:200",
+          // "keywords" => "required|max:200",
           "image" => "image"
         ]);
 
@@ -62,7 +62,7 @@ class ArticleController extends Controller
         $newArticle->subtitle = $data["subtitle"];
         $newArticle->content = $data["content"];
         $newArticle->excerpt = $data["excerpt"];
-        $newArticle->keywords = $data["keywords"];
+        // $newArticle->keywords = $data["keywords"];
         $newArticle->slug = Str::of($newArticle->title)->slug('-');
         $newArticle->image = $path;
         $newArticle->save();

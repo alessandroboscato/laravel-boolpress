@@ -15,7 +15,7 @@ class ArticleTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for ($i = 0; $i < 20; $i++){
+        for ($i = 0; $i < 10; $i++){
 
           $user = User::inRandomOrder()->first();
 
@@ -26,7 +26,7 @@ class ArticleTableSeeder extends Seeder
           $newArticle->content = $faker->text;
           $newArticle->excerpt = $faker->sentence(12, true);
           $newArticle->slug = Str::of($newArticle->title)->slug('-');
-          $newArticle->keywords = $faker->sentence(4);
+          $newArticle->image = $faker->image('public/storage/',400,300, null, false) ;
           $newArticle->save();
         }
     }

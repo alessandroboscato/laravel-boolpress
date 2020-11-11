@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -52,6 +53,9 @@ class ArticleController extends Controller
           "image" => "image"
         ]);
 
+        $path = Storage::disk('public')->put('images', $data["image"]);
+
+
         $newArticle = new Article;
         $newArticle->user_id = Auth::id();
         $newArticle->title = $data["title"];
@@ -60,6 +64,7 @@ class ArticleController extends Controller
         $newArticle->excerpt = $data["excerpt"];
         $newArticle->keywords = $data["keywords"];
         $newArticle->slug = Str::of($newArticle->title)->slug('-');
+        $newArticle->image = $path;
         $newArticle->save();
 
         return redirect()->route("articles.show", $newArticle->slug);

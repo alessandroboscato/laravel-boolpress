@@ -1,5 +1,5 @@
 <?php
-
+// Controller guests
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -25,9 +25,10 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $article = Article::where('slug', $slug)->first();
+        return view('guest.articles.show', compact('article'));
     }
 
 

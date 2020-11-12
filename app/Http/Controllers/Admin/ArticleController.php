@@ -66,8 +66,20 @@ class ArticleController extends Controller
         $newArticle->save();
 
         // validazione keyword
-        $newTag = new Tag;
-        $newArticle->keywords = $data["keywords"];
+
+        $collection = Str::of($data["keywords"])->explode(' ');
+        foreach ($collection as $keyword){
+          $newTag = new Tag;
+          $newTag->name_tag = $keyword;
+          $newTag->save();
+          $tag = Tag::find($newTag->id);
+          $tag->tags()->attach($newArticle->id);
+        }
+
+        // inserimento tabella pivot
+        $article = Article::find($newArticle->id);
+        $article->tags()->attach(Auth::id());
+
 
         return redirect()->route("articles.show", $newArticle->slug);
       }
@@ -107,7 +119,6 @@ class ArticleController extends Controller
         $data = $request->all();
 
         $request->validate([
-          // "user_id" => "required|exists:users,id",
           "title" => "required|max:255",
           "subtitle" => "required|max:255",
           "content" => "required|max:20000",
@@ -116,7 +127,6 @@ class ArticleController extends Controller
           "image" => "image"
         ]);
 
-        // $article = Article::where("slug", $slug)->first();
 
         $article = Article::find($id);
         $article->title = $data["title"];
